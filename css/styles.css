@@ -1,0 +1,18 @@
+body {
+  padding-bottom: 20px;
+}
+
+.navbar {
+  margin-bottom: 20px;
+}
+
+/*Elimino el molesto punto . de las lista*/
+ul{
+  list-style: none;
+}
+
+#menu{
+  display: none;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/yourlocations.css">
+    <style>
+        .bd-placeholder-img {
+          font-size: 1.125rem;
+          text-anchor: middle;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          user-select: none;
+        }
+
+        @media (min-width: 768px) {
+          .bd-placeholder-img-lg {
+            font-size: 3.5rem;
+          }
+        }
+    </style>
+    <link rel="shortcut icon" href="src/icons/favicon.png">
+    <title>The Weather</title>
+</head>
+<body onload="onLoad()">
+  
+    <header> <!--class="site-header sticky-top"-->
+      <!--Menu-->
+        <div class="col-lg-8 mx-auto p-3 py-md-5">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light rounded" aria-label="Eleventh navbar example">
+              <div class="container-fluid">
+                <a class="navbar-brand" href="#">The Weather</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+        
+                <div class="collapse navbar-collapse" id="navbarsExample09">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="#section-2">Pronostico</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="#sectionpronosticos">Ubicaciones</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="#section-3">Desarrollo</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="https://openweathermap.org/">API</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="dropdown09" data-bs-toggle="dropdown" aria-expanded="false">Acerca de</a>
+                      <ul class="dropdown-menu" aria-labelledby="dropdown09">
+                        <li><a class="dropdown-item" href="#">Ultima Actualizacion</a></li>
+                        <li><a class="dropdown-item" href="#" style="font-size: 12px;">28 de Noviembre 2022</a></li>
+                        <li><a class="dropdown-item" href="#">Version 1.23.02</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                  <!--INPUT SEARCH-->
+                  <form>
+                    <!--AREA BUSCAR-->
+                    <div class="row g-0">
+                      <div class="col-md-8 my-auto">
+                        <input class="form-control" type="text" placeholder="Find you location" aria-label="Search" >
+                      </div>
+                      <div class="col-md-4">
+                        <button type="submit" class="btn btn-outline-primary m-1" id="btnbuscar">Buscar</button>
+                      </div>
+                    </div>  
+                  </form>
+                  
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-info-circle m-2" viewBox="0 0 16 16" id="liveToastSearchForm">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                  </svg>
+                  
+                  
+                  
+                  
+
+                  <!--AVISO Info-->
+
+                  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+                    <div id="liveToastSearch" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+                      <div class="toast-header">
+                        <img src="src/icons/favicon.png" class="rounded me-2" alt="..." width="15px">
+                        <strong class="me-auto">The Weather</strong>
+                        <small>Ahora</small>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                      </div>
+                      <div class="toast-body">
+                        Para hacerlo más preciso, ponga el nombre de la ciudad, coma, código de país de 2 letras (ISO3166). Obtendrá todas las ciudades adecuadas en el país elegido.
+                        <br>
+                        El orden es importante: el primero es el nombre de la ciudad, luego la coma y luego el país. Ejemplo - Londres, GB o Nueva York, EE. UU.
+                      </div>
+                    </div>
+                  </div>
+
+                  <script>
+                    document.addEventListener("DOMContentLoaded", function(){
+                        var btn = document.getElementById("liveToastSearchForm");
+                        var element = document.getElementById("liveToastSearch");
+                    
+                        // Create toast instance
+                        var myToast = new bootstrap.Toast(element);
+                    
+                        btn.addEventListener("click", function(){
+                            myToast.show();
+                        });
+                    });
+                  </script>
+                </div>
+              </div>
+            </nav>
+            
+        </div>    
+    </header>
+    
+    <div class="col-lg-8 mx-auto p-3 py-md-10">
+      <span class="msg"></span>
+    </div>
+    
+
+    <!--Spinner de Carga-->
+    <div class="text-center" id="loader">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <!--Encabezado-->
+
+    <div class="col-lg-8 mx-auto p-3 py-md-5" id="">
+        <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+          <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+            <span class="fs-4">Actualizado el <span class="fs-4" id="date">...</span></span>
+          </a>
+        </header>
+      
+        <main>
+          <section id="section-1">
+            <h1 data-aos="fade-up">Welcome to The Weather <span>❤</span></h1>
+            <p class="fs-5 col-md-8" data-aos="fade-up">Una app del clima precisa, sencilla y facil de usar, disenada para ofrecer el mejor servicio de prediccion del clima a nuestros usuarios alrededor del mundo.</p>
+            <br><br><br>
+            <div class="container">
+              <div class="row g-5">
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-8 text-end">
+                  <h1 data-aos="fade-up">Find your Country</h1>
+                  <p class="fs-5 col-md-12" data-aos="fade-up">Puedes realizar la busqueda del pais, region o ciudad que desees en la barra de busqueda en la esquina superior izquierda o seleccionar algunas de las sugerencias.</p>
+                </div>
+              </div>
+              <br><br><br>
+              <h1 data-aos="fade-up">Weather Forecasts</h1>
+              <p class="fs-5 col-md-8" data-aos="fade-up">Vosualiza a tiempo real los pronosticos del clima local, ya no tienes porque preocuparte de una sorpresa. <br> Una cosa menos en tu cabeza.</p>
+              <hr class="col-3 col-md-3 mb-5">
+              <br><br><br>
+              <div class="text-center">
+                <h2>SAVE THE PLANET</h2>
+              </div>
+              
+              <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                  <div class="carousel-item active" data-bs-interval="10000">
+                    <div class="d-block w-100" style="height: 300px;"></div>
+                    <div class="carousel-caption d-md-block">
+                      <p>
+                        La predicción del clima es extremadamente valiosa para reducir los daños a la propiedad e incluso las muertes. Si se puede predecir el rastro propuesto de un huracán, las personas pueden tratar de asegurar su propiedad y luego evacuar.
+                      </p>
+                      <p class="text-end"><i>Carlos Daniel - CEO of Netbloids</i></p>
+                    </div>
+                  </div>
+                  <div class="carousel-item" data-bs-interval="10000">
+                    <div class="d-block w-100" style="height: 300px;"></div>
+                    <div class="carousel-caption d-md-block">
+                      <p>
+                        La información y las predicciones climáticas sirven como base para la adopción de decisiones en el ámbito de salud pública, gestión del riesgo, agricultura, pesca, gestión del agua, turismo, transporte y energía. Estos sectores necesitan con urgencia información de base científica para planificar sus actividades.
+                      </p>
+                      <p class="text-end"><i>Bruna Antelo - Co-founder of Antelo Industries</i></p>
+                    </div>
+                  </div>
+                  <div class="carousel-item" data-bs-interval="10000">
+                    <div class="d-block w-100" style="height: 300px;"></div>
+                    <div class="carousel-caption d-md-block">
+                      <p>
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates quasi, laborum maiores facere dolor at quisquam adipisci cumque error pariatur ullam laudantium dolore neque, debitis harum, totam non. Cupiditate, labore.
+                      </p>
+                      <p class="text-end"><i>Omar Alexis - Co-founder of Netbloids</i></p>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+              
+            </div>
+            <br><br>
+            
+          </section>
+          
+      
+          <!--<div class="mb-5">
+            <a href="#" class="btn btn-primary btn-lg px-4">Download examples</a>
+          </div>-->
+          <section id="section-2">
+            <hr class="col-3 col-md-12 mb-5">
+            <br><br>
+            <div class="container">
+              <div class="text-center">
+                <h1 id="location">Loading...</h1>
+                <br><br>
+              </div>
+              <div class="row g-5 text-center">
+                <div class="col-md-3">
+                  <div id = "icon">
+                    <img src="" id="img" width="150px">
+                  </div>
+                  <!--<img src="src/icons/favicon.png" alt="" width="150px">-->
+                </div>
+                <div class="col-md-4">
+                  <h1 style="font-size: 100px;" id="temperature">...</h1>
+                </div>
+                <div class="col-md-5 text-start">
+                  <h3 id="description2">...</h3>
+                  <h3>Sensacion Termica</h3>
+                  <h3 id="temperature2">...</h3>
+                </div>
+              </div>
+
+              <br><br>
+
+              <div class="row g-5 text-center">
+                <div class="col-md-4">
+                  <h5>Humedad</h5>
+                  <p class="card-text" id="humidity" style="font-size: 30px;">...</p>
+                </div>
+                <div class="col-md-4">
+                  <h5>Visibilidad</h5>
+                  <p class="card-text" id="description" style="font-size: 30px;">...</p>
+                </div>
+                <div class="col-md-4">
+                  <h5>Presion</h5>
+                  <p class="card-text" id="pressure" style="font-size: 30px;">...</p>
+                </div>
+              </div>
+              <br><br><br> 
+            </div>
+          </section>
+
+          
+
+          <section class="ajax-section" id="sectionpronosticos">
+            <hr class="col-3 col-md-12 mb-5">
+            <div class="text-center">
+            
+              <h2>YOUR LOCATIONS</h2>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16" id="btnliveToastLocations">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+              </svg>
+            </div>
+            <br><br>
+            <div class="container">
+              <ul class="cities"></ul>
+            </div>
+          </section>
+          
+          <!--AVISO InfoLocation-->
+
+          <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+            <div id="liveToastLocations" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="toast-header">
+                <img src="src/icons/favicon.png" class="rounded me-2" alt="..." width="15px">
+                <strong class="me-auto">The Weather</strong>
+                <small>Ahora</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>
+              <div class="toast-body">
+                Aqui apareceran las ciudades que digites en el buscador del menu.
+              </div>
+            </div>
+          </div>
+
+          <script>
+            document.addEventListener("DOMContentLoaded", function(){
+                var btn = document.getElementById("btnliveToastLocations");
+                var element = document.getElementById("liveToastLocations");
+            
+                // Create toast instance
+                var myToast = new bootstrap.Toast(element);
+            
+                btn.addEventListener("click", function(){
+                    myToast.show();
+                });
+            });
+          </script>
+
+          
+          
+          
+          <br><br><br>
+      
+          
+
+          <section id="section-3">
+            <hr class="col-3 col-md-2 mb-5">
+            <div class="row g-5">
+              <div class="col-md-6">
+                <h2>Desarrollo</h2>
+                <p>Esta es una app desarrollada con fines educativos por lo que la informcaion presentada puede no ser precisa.</p>
+                <ul class="icon-list">
+                  <li><a href="https://www.netbloids.com/" rel="noopener" target="_blank">Netbloids</a></li>
+                  <li class="text-muted">Disponible pronto!</li>
+                </ul>
+              </div>
+        
+              <div class="col-md-6">
+                <h2>Guia</h2>
+                <p>La consultas sobre la app estan cerradas en este momento. <br> Aqui algunos articulos de interes:</p>
+                <ul class="icon-list">
+                  <li><a href="#">Antelo Industries</a></li>
+                  <li><a href="#">Netbloids</a></li>
+                  <li><a href="#">Save the puppies</a></li>
+                  <li><a  style="text-decoration:underline;" class=".text-primary" id="liveToastSuribtn">Who is Suri?</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <!--Who is Suri?-->
+            <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+              <div id="liveToastSuri" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                  <img src="src/icons/favicon.png" class="rounded me-2" alt="..." width="15px">
+                  <strong class="me-auto">Companer@</strong>
+                  <small>Ahora</small>
+                  <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                  Uy! Cachorro, me tocaste!!!
+                </div>
+              </div>
+            </div>
+
+            <script>
+              document.addEventListener("DOMContentLoaded", function(){
+                  var btn = document.getElementById("liveToastSuribtn");
+                  var element = document.getElementById("liveToastSuri");
+              
+                  // Create toast instance
+                  var myToast = new bootstrap.Toast(element);
+              
+                  btn.addEventListener("click", function(){
+                      myToast.show();
+                  });
+              });
+            </script>
+          </section>
+      
+          
+        </main>
+        <footer class="pt-5 my-5 text-muted border-top">
+          Created by Netbloids and Antelo Industries &middot; &copy; 2022
+        </footer>
+      </div>
+
+      
+      
+    <script src="js/main.js"></script>
+
+    <!--Busqueda by Carlos Daniel-->
+    <script src="js/search.js"></script>
+    
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+
+</body>
+</html>
